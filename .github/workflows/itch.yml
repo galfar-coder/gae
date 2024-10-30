@@ -1,0 +1,30 @@
+name: Upload to Itch.io on Release
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  release-to-itch:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Download Release Assets
+        uses: dawidd6/action-download-artifact@v2
+        with:
+          owner: ${{ github.repository_owner }}
+          repo: ${{ github.event.repository.name }}
+          tag: ${{ github.event.release.tag_name }}
+          path: build
+
+      - name: Upload to Itch.io
+        env:
+          BUTLER_API_KEY: ${{ secrets.ITCH_API_KEY }}
+        run: |
+          curl -L https://broth.itch.ovh/butler/linux-amd64/LATEST/archive/default > butler.zip
+          unzip butler.zip -d /usr/local/bin
+          chmod +x /usr/local/bin/butler
+
+          # Upload Linux and Windows builds with GitHub release tag
+          /usr/local/bin/butler push build/GAE_Linux.zip your-itch-username/gae:linux-${{ github.event.release.tag_name }}
+          /usr/local/bin/butler push build/GAE_Windows.zip your-itch-username/gae:windows-${{ github.event.release.tag_name }}
