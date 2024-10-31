@@ -1,3 +1,4 @@
+[![Upload to Itch.io on Release](https://github.com/galfar-coder/gae/actions/workflows/itch.yml/badge.svg?branch=main)](https://github.com/galfar-coder/gae/actions/workflows/itch.yml)
 # GAE - galfar.exe's Audio Engine 🎶
 
 **GAE (Galfar.exe's Audio Engine)** is a forever-free program crafted to transform your music into captivating visuals. Offering seamless customizability and a variety of features, GAE enhances your listening experience in real-time.
